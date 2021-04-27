@@ -1,0 +1,22 @@
+Feature: Customers can collect their orders
+
+Scenario: Order Test
+  Given the time is "11:00"
+  Given a customer goes to "http://test.wimp.com/"
+  And they fill in "Margherita" for "SearchText"
+  When they press "Search"
+  Then they should see "Margherita" within "SearchResults"
+  And they select "Medium" from "Size"
+  When they press "Add to basket"
+  Then they should see "1 item" in "BasketItemCount"
+  When they click "Checkout"
+  And they select "Collect" from "DeliveryInstructions"
+  And they select "Pay on Collection" from "PaymentOption"
+  And they fill in "Marvin" for "OrderName"
+  And they fill in "12334456" for "ContactPhoneNumber"
+  When they press "Submit order"
+  Then they should see "SuccessMessage"
+  Then they should not see "ErrorMessage"
+  And they should see "Thank you for your order!" within "SuccessMessage"
+  And they should see "11:20" within "CollectionTime"
+  And they should see "$14" within "TotalAmount"
